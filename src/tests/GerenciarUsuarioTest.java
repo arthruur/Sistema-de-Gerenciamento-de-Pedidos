@@ -1,25 +1,31 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class GerenciarUsuarioTest {
 
-    @Test
-    public void testConhecerUsuario() {
-        GerenciarUsuario gerenciarUsuario = new GerenciarUsuario();
-        Usuario usuario = new Usuario("user1");
-        gerenciarUsuario.setUsuario(usuario);
+    private GerenciarUsuario gerenciarUsuario;
+    private Cliente cliente;
 
-        assertEquals(usuario, gerenciarUsuario.getUsuario());
+    @BeforeEach
+    public void setUp() {
+        gerenciarUsuario = new GerenciarUsuario();
+        cliente = new Cliente("Cliente A");
     }
 
     @Test
     public void testCadastrarUsuario() {
-        GerenciarUsuario gerenciarUsuario = new GerenciarUsuario();
-        Usuario usuario = new Usuario("user1");
-        gerenciarUsuario.cadastrarUsuario(usuario);
+        gerenciarUsuario.cadastrarUsuario(cliente);
+        assertEquals(1, gerenciarUsuario.getUsuarios().size());
+        assertEquals(cliente, gerenciarUsuario.getUsuarios().get(0));
+    }
 
-        assertTrue(gerenciarUsuario.getUsuarios().contains(usuario));
+    @Test
+    public void testConhecerUsuario() {
+        gerenciarUsuario.cadastrarUsuario(cliente);
+        Cliente encontrado = gerenciarUsuario.conhecerUsuario("Cliente A");
+        assertEquals(cliente, encontrado);
     }
 }
