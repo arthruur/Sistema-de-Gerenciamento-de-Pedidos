@@ -3,7 +3,12 @@ public class Produto {
     private double preco;
     private int quantidadeEmEstoque;
     private String descricao;
-    
+
+    public Produto(String nome, double preco, String descricao){
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+    }
     
     public void setQuantidadeEmEstoque(int novaQuantidade) {
         quantidadeEmEstoque = novaQuantidade; 
