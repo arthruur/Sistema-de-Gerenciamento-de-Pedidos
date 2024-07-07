@@ -52,4 +52,7 @@ public class Estoque {
         return produtos.entrySet().iterator();
     }
     // Construtor, getters e setters
+    public synchronized Map<Produto,Integer> getProdutos(){
+        return produtos;
+    }
 }

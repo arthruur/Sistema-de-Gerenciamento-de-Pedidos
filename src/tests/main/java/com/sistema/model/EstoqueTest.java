@@ -12,15 +12,14 @@ public class EstoqueTest {
 
     @BeforeEach
     public void setUp() {
-        estoque = new Estoque();
-        produto = new Produto("Produto A", 10.0, 100, "Descrição do Produto A");
+        estoque = Estoque.getInstance();
     }
 
     @Test
     public void testCadastrarProduto() {
-        estoque.cadastrarProduto(produto);
+        Produto produto = estoque.cadastrarProduto("Produto A", 10.0, "Descrição do Produto A", 10);
         assertEquals(1, estoque.getProdutos().size());
-        assertEquals(produto, estoque.getProdutos().get(0));
+        assertEquals(10, estoque.getProdutos().get(produto));
     }
 
     @Test
