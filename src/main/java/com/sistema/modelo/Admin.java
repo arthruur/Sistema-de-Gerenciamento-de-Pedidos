@@ -1,6 +1,5 @@
 package main.java.com.sistema.modelo;
 public class Admin {
-    private Estoque estoque;
 
     public void gerenciarEstoqueDeProdutos() {
         // Implementação para gerenciar o estoque

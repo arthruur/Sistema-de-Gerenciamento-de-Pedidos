@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Pedido {
     private List<CarrinhoItem> itens;
-    private PedidoEstado estado;
+    private PedidoEstado estado; // simplificar para a mesma implementação de "status" do leilao
     private Cliente cliente;
 
     public Pedido() {
@@ -27,6 +27,12 @@ public class Pedido {
         
     }
 
+    public Cliente getCliente(){
+        return cliente;
+    }
 
+    public List<CarrinhoItem> getItens(){
+        return itens;
+    }
     // Construtor, getters e setters
 }

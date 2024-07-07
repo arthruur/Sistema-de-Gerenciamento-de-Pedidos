@@ -22,13 +22,12 @@ public class Estoque {
     
     // provavelmente será modificado para usar factory method
     public synchronized Produto cadastrarProduto(String nome, double preco, String desc, int qtd){
-        Produto produto = new Produto(nome, preco, desc);
+        Produto produto = new ProdutoEletronico(nome, preco, desc);
         produtos.put(produto, qtd);
         return produto;
     }
 
     public synchronized boolean adicionarQuantidade(Produto produto, int qtd) {
-        // refazer try e catch
         if (produtos.containsKey(produto)) {
             produtos.put(produto, produtos.get(produto) + qtd);
             return true;
@@ -51,8 +50,13 @@ public class Estoque {
     public synchronized Iterator<Map.Entry<Produto, Integer>> listarProdutos(){
         return produtos.entrySet().iterator();
     }
-    // Construtor, getters e setters
+
     public synchronized Map<Produto,Integer> getProdutos(){
         return produtos;
+    }
+    
+    //para limpar o estoque antes de cada teste
+    public synchronized void limparEstoque(){
+        produtos.clear();
     }
 }

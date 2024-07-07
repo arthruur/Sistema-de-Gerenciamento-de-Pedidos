@@ -13,6 +13,7 @@ public class EstoqueTest {
     @BeforeEach
     public void setUp() {
         estoque = Estoque.getInstance();
+        estoque.limparEstoque();
     }
 
     @Test
@@ -23,16 +24,12 @@ public class EstoqueTest {
     }
 
     @Test
-    public void testRemoverProduto() {
-        estoque.cadastrarProduto(produto);
-        estoque.removerProduto(produto);
-        assertTrue(estoque.getProdutos().isEmpty());
-    }
-
-    @Test
     public void testModificarQtdDeProduto() {
-        estoque.cadastrarProduto(produto);
-        estoque.modificarQtdDeProduto(produto, 50);
-        assertEquals(50, produto.getQuantidadeEmEstoque());
+        produto = estoque.cadastrarProduto("Produto A", 10.0, "Descrição do Produto A", 10);
+        estoque.removerQuantidade(produto, 5);
+        assertTrue(estoque.getProdutos().get(produto) == 5);
+
+        estoque.adicionarQuantidade(produto, 5);
+        assertTrue(estoque.getProdutos().get(produto) == 10);
     }
 }

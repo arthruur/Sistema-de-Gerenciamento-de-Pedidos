@@ -1,8 +1,8 @@
 package main.java.com.sistema.modelo;
-public class Produto {
+
+public abstract class Produto {
     private String nome;
     private double preco;
-    private int quantidadeEmEstoque;
     private String descricao;
 
     public Produto(String nome, double preco, String descricao){
@@ -10,15 +10,20 @@ public class Produto {
         this.preco = preco;
         this.descricao = descricao;
     }
-    
-    public void setQuantidadeEmEstoque(int novaQuantidade) {
-        quantidadeEmEstoque = novaQuantidade; 
-    }
 
+    public String getNome(){
+        return nome;
+    }
 
     public double getPreco() {
         return preco; 
     }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public abstract String getCategoria();
 
     // Construtor, getters e setters
 }
