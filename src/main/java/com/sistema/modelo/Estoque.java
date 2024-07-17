@@ -47,12 +47,36 @@ public class Estoque {
         return true;
     }
 
+    // Método para remover um produto do estoque
+    public synchronized boolean removerProduto(Produto produto) {
+        if (produtos.containsKey(produto)) {
+            produtos.remove(produto);
+            return true;
+        }
+        return false;
+    }   
+
     public synchronized Iterator<Map.Entry<Produto, Integer>> listarProdutos(){
         return produtos.entrySet().iterator();
     }
 
     public synchronized Map<Produto,Integer> getProdutos(){
         return produtos;
+    }
+
+    // Método para obter a quantidade de um produto específico
+    public synchronized Integer getQuantidade(Produto produto) {
+        return produtos.get(produto);
+    }
+
+
+    public synchronized Produto getProduto(String nome) {
+        for (Produto produto : produtos.keySet()) {
+            if (produto.getNome().equals(nome)) {
+                return produto;
+            }
+        }
+        return null;
     }
     
     //para limpar o estoque antes de cada teste

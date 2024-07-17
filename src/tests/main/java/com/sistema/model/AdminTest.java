@@ -10,33 +10,52 @@ public class AdminTest {
 
     private Admin admin;
     private Estoque estoque;
-    private Produto produto;
-    private Pedido pedido;
-
+    
     @BeforeEach
     public void setUp() {
-        estoque = new Estoque();
+        estoque = Estoque.getInstance();
+        estoque.limparEstoque();
         admin = new Admin(estoque);
-        produto = new Produto("Produto A", 10.0, 100, "Descrição do Produto A");
-        pedido = new Pedido();
+        admin.cadastrarProduto("Produto A", 10.0, 100, "Descrição do Produto A");
     }
 
     @Test
-    public void testGerenciarEstoque() {
-        admin.gerenciarEstoqueDeProdutos();
-        // Verificar se o método realiza ações esperadas
+    public void testCadastrarProduto() {
+        // Verifica se o produto foi cadastrado corretamente
+        Produto produto = estoque.getProduto("Produto A");
+        assertNotNull(produto);
+        assertEquals("Produto A", produto.getNome());
+        assertEquals(10.0, produto.getPreco());
+        assertEquals(100, estoque.getQuantidade(produto));
+        assertEquals("Descrição do Produto A", produto.getDescricao());
     }
 
     @Test
-    public void testProcessarEAprovarPedido() {
-        pedido.adicionarItem(produto, 2);
-        admin.processarEAprovarPedido(pedido);
-        assertEquals("Processando", pedido.getEstado().getEstado());
+    public void testAdicionarProduto() {
+        // Adiciona mais unidades do produto ao estoque
+        Produto produto = estoque.getProduto("Produto A"); 
+        admin.adicionarProduto(produto, 50);
+        assertEquals(150, estoque.getQuantidade(produto));
     }
 
     @Test
-    public void testAcompanharStatusDoPedido() {
-        pedido.adicionarItem(produto, 2);
-        assertEquals("Novo", admin.acompanharStatusDoPedido(pedido));
+    public void testExcluirProduto() {
+        // Exclui o produto do estoque
+        Produto produto = estoque.getProduto("Produto A");
+        admin.excluirProduto(produto);
+        assertNull(estoque.getProduto("Produto A"));
+    }
+
+    @Test
+    public void testCadastrarProdutoNovo() {
+        // Cadastra um novo produto e verifica se foi adicionado corretamente
+        admin.cadastrarProduto("Produto B", 20.0, 200, "Descrição do Produto B");
+        Produto produtoB = estoque.getProduto("Produto B");
+        assertNotNull(produtoB);
+        assertEquals("Produto B", produtoB.getNome());
+        assertEquals(20.0, produtoB.getPreco());
+        assertEquals(200, estoque.getQuantidade(produtoB));
+        assertEquals("Descrição do Produto B", produtoB.getDescricao());
     }
 }
+
