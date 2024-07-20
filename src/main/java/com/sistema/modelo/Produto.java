@@ -23,6 +23,11 @@ public abstract class Produto {
         return descricao;
     }
 
+    @Override
+    public String toString(){
+        return nome; 
+    }
+
     public abstract String getCategoria();
 
     // Construtor, getters e setters

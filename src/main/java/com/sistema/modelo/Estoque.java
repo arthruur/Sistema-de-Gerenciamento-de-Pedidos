@@ -34,6 +34,14 @@ public class Estoque {
         }
         return false;
     }
+    
+    public synchronized boolean diminuirQuantidade(Produto produto, int qtd) {
+        if (produtos.containsKey(produto)) {
+            produtos.put(produto, produtos.get(produto) - qtd);
+            return true;
+        }
+        return false;
+    }
 
     public synchronized boolean removerQuantidade(Produto produto, int qtd){
         int quantidadeAtual = produtos.get(produto);

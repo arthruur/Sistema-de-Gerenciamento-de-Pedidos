@@ -4,15 +4,17 @@ import java.util.List;
 
 public class Admin {
     Estoque estoque;
+    String senha; 
     List<Pedido> pedidos; 
     
 
     public Admin(Estoque estoque){
         this.estoque = estoque; 
+        this.senha = "1234"; 
     }
 
-    public void cadastrarProduto(String nome, double preco, int qtd, String desc){
-        estoque.cadastrarProduto(nome, preco, desc, qtd);  
+    public Produto cadastrarProduto(String nome, double preco, int qtd, String desc){
+        return estoque.cadastrarProduto(nome, preco, desc, qtd);  
     }
 
     public boolean excluirProduto(Produto produto){
@@ -21,10 +23,9 @@ public class Admin {
 
     public boolean adicionarProduto(Produto produto, int qtd){
         return estoque.adicionarQuantidade(produto, qtd); 
-
     }
-    public void gerenciarEstoqueDeProdutos() {
-        // Implementação para gerenciar o estoque
+    public boolean diminuirProduto(Produto produto, int qtd){
+        return estoque.diminuirQuantidade(produto, qtd); 
     }
 
     public void processarEAprovarPedido(Pedido pedido) {
@@ -33,6 +34,10 @@ public class Admin {
 
     public String acompanharStatusDoPedido(Pedido pedido) {
         return pedido.getEstado();
+    }
+
+    public String getSenha(){
+        return senha; 
     }
 
     // Construtor, getters e setters
