@@ -7,12 +7,12 @@ import main.java.com.sistema.modelo.*;
 
 public class GerenciarUsuarioTest {
 
-    private GerenciarClientes gerenciarUsuario;
+    private GerenciaClientes gerenciarUsuario;
     private Cliente cliente;
 
     @BeforeEach
     public void setUp() {
-        gerenciarUsuario = new GerenciarClientes();
+        gerenciarUsuario = new GerenciaClientes();
         cliente = new Cliente("Cliente A");
     }
 

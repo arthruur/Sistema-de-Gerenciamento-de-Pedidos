@@ -1,8 +1,9 @@
 package main.java.com.sistema.modelo;
-public class Pagamento {
-    private String metodo;
-    private double valor;
-    private Pedido pedido;
+public abstract class Pagamento {
 
-    // Construtor, getters e setters
+    private String tipo;
+
+    public Pagamento(String tipo) {
+        this.tipo = tipo;
+    }
 }
