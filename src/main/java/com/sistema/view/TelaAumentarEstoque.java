@@ -1,5 +1,6 @@
 package main.java.com.sistema.view;
 
+import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 import main.java.com.sistema.modelo.Estoque;
 import main.java.com.sistema.modelo.Produto;
 
@@ -111,6 +112,8 @@ public class TelaAumentarEstoque extends JFrame {
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite um valor numérico válido para a quantidade!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (QuantidadeNaoAlteradaException ex) {
+            JOptionPane.showMessageDialog(this,"Digite uma quantidade válida.");
         }
     }
 
