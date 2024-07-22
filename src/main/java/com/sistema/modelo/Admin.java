@@ -2,6 +2,9 @@ package main.java.com.sistema.modelo;
 
 import java.util.List;
 
+import main.java.com.sistema.exception.ProdutoNaoCadastrou;
+import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
+
 public class Admin {
     Estoque estoque;
     String senha; 
@@ -13,7 +16,7 @@ public class Admin {
         this.senha = "1234"; 
     }
 
-    public Produto cadastrarProduto(String nome, double preco, int qtd, String desc){
+    public Produto cadastrarProduto(String nome, double preco, int qtd, String desc)throws ProdutoNaoCadastrou{
         return estoque.cadastrarProduto(nome, preco, desc, qtd);  
     }
 
@@ -21,10 +24,10 @@ public class Admin {
         return estoque.removerProduto(produto); 
     }
 
-    public boolean adicionarProduto(Produto produto, int qtd){
+    public boolean adicionarProduto(Produto produto, int qtd)throws QuantidadeNaoAlteradaException{
         return estoque.adicionarQuantidade(produto, qtd); 
     }
-    public boolean diminuirProduto(Produto produto, int qtd){
+    public boolean diminuirProduto(Produto produto, int qtd)throws QuantidadeNaoAlteradaException{
         return estoque.diminuirQuantidade(produto, qtd); 
     }
 

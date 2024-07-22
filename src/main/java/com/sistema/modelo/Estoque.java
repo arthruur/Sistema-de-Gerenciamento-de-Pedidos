@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import main.java.com.sistema.exception.ProdutoNaoCadastrou;
+import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
+
 public class Estoque {
     private static Estoque instance;
-    private Map<Produto, Integer> produtos; // ou estoque?
+    private Map<Produto, Integer> produtos;
 
     private Estoque(){
         produtos = new HashMap<>();
@@ -21,38 +24,45 @@ public class Estoque {
     }
     
     // provavelmente será modificado para usar factory method
-    public synchronized Produto cadastrarProduto(String nome, double preco, String desc, int qtd){
+    public synchronized Produto cadastrarProduto(String nome, double preco, String desc, int qtd)throws ProdutoNaoCadastrou{
+
+        if (nome == null || nome.isEmpty()){
+            throw new ProdutoNaoCadastrou("É necessário preencher o campo nome");
+        }
+        
+        if (preco <= 0){
+            throw new ProdutoNaoCadastrou("É necessário preencher o campo preco");
+        }
+
         Produto produto = new ProdutoEletronico(nome, preco, desc);
         produtos.put(produto, qtd);
         return produto;
+
     }
 
-    public synchronized boolean adicionarQuantidade(Produto produto, int qtd) {
+    public synchronized boolean adicionarQuantidade(Produto produto, int qtd)throws QuantidadeNaoAlteradaException{
         if (produtos.containsKey(produto)) {
-            produtos.put(produto, produtos.get(produto) + qtd);
-            return true;
-        }
-        return false;
-    }
-    
-    public synchronized boolean diminuirQuantidade(Produto produto, int qtd) {
-        if (produtos.containsKey(produto)) {
-            produtos.put(produto, produtos.get(produto) - qtd);
-            return true;
+            if (qtd > 0) {
+                produtos.put(produto, produtos.get(produto) + qtd);
+                return true;
+            } else {
+                throw new QuantidadeNaoAlteradaException("A quantidade deve ser maior que 0.");
+            }
         }
         return false;
     }
 
-    public synchronized boolean removerQuantidade(Produto produto, int qtd){
-        int quantidadeAtual = produtos.get(produto);
-
-        if (quantidadeAtual < qtd){
-            return false;
+    public synchronized boolean diminuirQuantidade(Produto produto, int qtd) throws QuantidadeNaoAlteradaException{
+        if (produtos.containsKey(produto)) {
+            int quantidadeAtual = produtos.get(produto);
+            if (qtd <= quantidadeAtual) {
+                produtos.put(produto, quantidadeAtual - qtd);
+                return true;
+            } else {
+                throw new QuantidadeNaoAlteradaException("Quantidade a ser removida excede a quantidade disponível no estoque.");
+            }
         }
-
-        int novaQtd = quantidadeAtual - qtd;
-        produtos.put(produto, novaQtd);
-        return true;
+        return false;
     }
 
     // Método para remover um produto do estoque
