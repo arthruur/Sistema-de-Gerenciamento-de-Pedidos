@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 import main.java.com.sistema.modelo.Cliente;
 import main.java.com.sistema.modelo.Estoque;
 import main.java.com.sistema.modelo.Pagamento;
@@ -87,7 +88,12 @@ public class TelaPagamento {
                         int quantidade = entry.getValue();
 
                         // Atualiza o estoque
-                        Estoque.getInstance().diminuirQuantidade(produto, quantidade);
+                        try {
+                            Estoque.getInstance().diminuirQuantidade(produto, quantidade);
+                        } catch (QuantidadeNaoAlteradaException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
                     }
                     // Limpa o carrinho do cliente
                     cliente.getCarrinho().esvaziar();

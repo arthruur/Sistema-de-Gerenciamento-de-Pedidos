@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import main.java.com.sistema.exception.ProdutoNaoCadastrou;
 import main.java.com.sistema.modelo.Estoque;
 import main.java.com.sistema.modelo.Produto;
 
@@ -70,17 +72,19 @@ public class TelaCadastroProduto {
                 String descricao = campoDescricao.getText();
 
                 // Aqui você deve chamar o método do estoque para cadastrar o produto
-                Produto produto = estoque.cadastrarProduto(nome, preco, descricao, 0); // 0 ou a quantidade inicial desejada
-
-                if (produto != null) {
+                Produto produto;
+                try {
+                    produto = estoque.cadastrarProduto(nome, preco, descricao, 0);
                     JOptionPane.showMessageDialog(frame, "Produto cadastrado com sucesso!");
                     // Limpar campos após o cadastro (opcional)
                     campoNome.setText("");
                     campoPreco.setText("");
                     campoDescricao.setText("");
-                } else {
+
+                } catch (ProdutoNaoCadastrou e1) {
                     JOptionPane.showMessageDialog(frame, "Erro ao cadastrar o produto.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+                } // 0 ou a quantidade inicial desejada
+
             }
         });
 

@@ -3,6 +3,8 @@ package main.java.com.sistema.view;
 import java.util.Iterator;
 import java.util.LinkedList;
 import main.java.com.sistema.exception.LoginFalhouException;
+import main.java.com.sistema.exception.ProdutoNaoCadastrou;
+import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 import main.java.com.sistema.exception.UsuarioNaoCadastrouException;
 import main.java.com.sistema.modelo.Admin;
 import main.java.com.sistema.modelo.Cliente;
@@ -18,11 +20,11 @@ public class SistemaFacade {
       this.cs = cs; 
    }
 
-   public Produto cadastrarProduto(String nome, double preco, int quantidade, String descricao) {
+   public Produto cadastrarProduto(String nome, double preco, int quantidade, String descricao) throws ProdutoNaoCadastrou {
       return cs.getAdmin().cadastrarProduto(nome, preco, quantidade, descricao);
    }
 
-   public boolean adicionarProduto(Produto produto, int quantidade) {
+   public boolean adicionarProduto(Produto produto, int quantidade) throws QuantidadeNaoAlteradaException {
       return cs.getAdmin().adicionarProduto(produto, quantidade);
    }
 

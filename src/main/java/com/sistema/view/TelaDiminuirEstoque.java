@@ -1,5 +1,6 @@
 package main.java.com.sistema.view;
 
+import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 import main.java.com.sistema.modelo.Estoque;
 import main.java.com.sistema.modelo.Produto;
 
@@ -61,7 +62,12 @@ public class TelaDiminuirEstoque extends JFrame {
         botaoConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                diminuirQuantidade();
+                try {
+                    diminuirQuantidade();
+                } catch (QuantidadeNaoAlteradaException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         });
         gbc.gridx = 1;
@@ -82,7 +88,7 @@ public class TelaDiminuirEstoque extends JFrame {
     }
 
     // Método para diminuir a quantidade do produto selecionado
-    private void diminuirQuantidade() {
+    private void diminuirQuantidade() throws QuantidadeNaoAlteradaException {
         Produto produtoSelecionado = (Produto) comboProdutos.getSelectedItem();
         if (produtoSelecionado == null) {
             JOptionPane.showMessageDialog(this, "Selecione um produto!", "Erro", JOptionPane.ERROR_MESSAGE);
