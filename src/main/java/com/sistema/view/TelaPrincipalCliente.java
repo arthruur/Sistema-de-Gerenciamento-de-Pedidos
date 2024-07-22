@@ -4,17 +4,23 @@ import main.java.com.sistema.modelo.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener; 
+import main.java.com.sistema.modelo.Estoque; 
 
 public class TelaPrincipalCliente extends JFrame {
     private Cliente cliente;
+    private SistemaFacade sf; 
 
-    public TelaPrincipalCliente(Cliente cliente) {
+    public TelaPrincipalCliente(Cliente cliente, SistemaFacade sf) {
         this.cliente = cliente;
+        this.sf = sf; 
         setTitle("Tela Principal do Cliente");
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Tela em modo fullscreen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        
         // Painel de boas-vindas
         JLabel labelBemVindo = new JLabel("Bem-vindo, " + cliente.getNome(), SwingConstants.CENTER);
         labelBemVindo.setFont(new Font("Arial", Font.BOLD, 24));
@@ -28,10 +34,25 @@ public class TelaPrincipalCliente extends JFrame {
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        // Botão para acessar perfil
-        JButton botaoPerfil = criarBotao("Meu Perfil");
-        panelOpcoes.add(botaoPerfil, gbc);
+        // Criando a barra de menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuNavegacao = new JMenu("Navegação");
+        JMenuItem menuItemVoltar = new JMenuItem("Voltar para a Tela Inicial");
 
+        // Adicionando ação ao item de menu "Voltar para a Tela Inicial"
+        menuItemVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a tela atual
+                new TelaLogin(sf); // Abre a tela de login
+            }
+        });
+
+        menuNavegacao.add(menuItemVoltar);
+        menuBar.add(menuNavegacao);
+        setJMenuBar(menuBar);
+        
+        
         // Botão para acessar pedidos
         JButton botaoPedidos = criarBotao("Meus Pedidos");
         gbc.gridy++;
@@ -48,20 +69,13 @@ public class TelaPrincipalCliente extends JFrame {
         gbc.gridy++; 
         panelOpcoes.add(botaoCarrinho, gbc);
 
-        // Botão para sair
-        JButton botaoSair = criarBotao("Sair");
-        gbc.gridy++;
-        panelOpcoes.add(botaoSair, gbc);
-
         // Adicionando o painel de opções ao frame
         add(panelOpcoes, BorderLayout.CENTER);
 
         // Ações dos botões
-        botaoPerfil.addActionListener(e -> mostrarMensagem("Acessando perfil do cliente..."));
-        botaoPedidos.addActionListener(e -> mostrarMensagem("Acessando pedidos do cliente..."));
-        botaoProdutos.addActionListener(e -> mostrarMensagem("Acessando produtos disponíveis..."));
-        botaoCarrinho.addActionListener(e -> mostrarMensagem("Acessando carrinho..."));
-        botaoSair.addActionListener(e -> dispose());
+        botaoPedidos.addActionListener(e -> new TelaPedidos(cliente));
+        botaoProdutos.addActionListener(e -> new TelaAdicionarProdutoCarrinho(Estoque.getInstance(), cliente));
+        botaoCarrinho.addActionListener(e -> new TelaCarrinho(cliente, sf));
 
         setVisible(true);
     }
@@ -73,7 +87,4 @@ public class TelaPrincipalCliente extends JFrame {
         return botao;
     }
 
-    private void mostrarMensagem(String mensagem) {
-        JOptionPane.showMessageDialog(this, mensagem);
-    }
 }

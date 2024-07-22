@@ -73,7 +73,8 @@ public class TelaLogin {
         botaoLogin.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                new TelaLoginCliente(sf); 
+                new TelaLoginCliente(sf);
+                jFrame.dispose(); 
             
         }}); 
 
@@ -83,6 +84,7 @@ public class TelaLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new TelaLoginAdmin(sf);
+                jFrame.dispose(); 
             }
         });
 

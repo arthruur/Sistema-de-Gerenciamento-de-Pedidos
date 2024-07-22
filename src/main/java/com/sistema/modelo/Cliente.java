@@ -1,4 +1,7 @@
 package main.java.com.sistema.modelo;
+
+import java.util.ArrayList;
+
 public class Cliente {
 
     private String login;
@@ -7,8 +10,8 @@ public class Cliente {
     private String cpf; 
     private String endereço; 
     private String telefone; 
-    private Pagamento pagamento; 
     private Carrinho carrinho;
+    private ArrayList<Pedido> pedidos; 
 
     public Cliente(String login, String senha, String nome, String cpf, String endereço, String telefone){
         this.login = login; 
@@ -17,6 +20,9 @@ public class Cliente {
         this.cpf = cpf; 
         this.endereço = endereço; 
         this.telefone = telefone; 
+        this.carrinho = new Carrinho();
+        this.pedidos = new ArrayList<Pedido>(); 
+
     }
 
     public String getLogin(){
@@ -43,5 +49,15 @@ public class Cliente {
         return telefone; 
     }
 
-    // Métodos para gerenciar carrinho e pagamentos
+    public Carrinho getCarrinho(){
+        return carrinho; 
+    }
+
+    public ArrayList<Pedido> getPedidos(){
+        return pedidos; 
+    }
+    public void adicionarPedido(Pedido pedido){
+        pedidos.add(pedido);
+    }
+
 }

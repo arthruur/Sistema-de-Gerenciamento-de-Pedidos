@@ -1,33 +1,46 @@
 package main.java.com.sistema.modelo;
-import java.util.Iterator;
-import java.util.List;
 
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class Carrinho {
-    private List<CarrinhoItem> itens;
+    private Map<Produto, Integer> itens;
+
+    public Carrinho() {
+        this.itens = new HashMap<>();
+    }
 
     public void adicionarProduto(Produto produto, int quantidade) {
-        // Lógica para adicionar produto
-        CarrinhoItem item = new CarrinhoItem(produto, quantidade);
-        itens.add(item);
+        if (itens.containsKey(produto)) {
+            // Se o produto já estiver no carrinho, atualiza a quantidade
+            itens.put(produto, itens.get(produto) + quantidade);
+        } else {
+            // Se o produto não estiver no carrinho, adiciona com a quantidade especificada
+            itens.put(produto, quantidade);
+        }
     }
 
     public void removerProduto(Produto produto) {
-        // Lógica para remover produto
-        Iterator<CarrinhoItem> iterator = itens.iterator();
-        while (iterator.hasNext()) {
-            CarrinhoItem item = iterator.next();
-            if (item.geProduto().equals(produto)){
-                iterator.remove();
-                break;
-            }
+        if (itens.containsKey(produto)) {
+            itens.remove(produto);
         }
     }
 
     public double getValorTotal() {
-        return itens.stream().mapToDouble(CarrinhoItem::getPrecoTotal).sum();
+        return itens.entrySet().stream()
+                .mapToDouble(entry -> entry.getKey().getPreco() * entry.getValue())
+                .sum();
     }
 
-    // Construtor, getters e setters
+    public Map<Produto, Integer> getItens() {
+        return itens;
+    }
+
+    public void setItens(Map<Produto, Integer> itens) {
+        this.itens = itens;
+    }
+
+    public void esvaziar() {
+        itens.clear();
+    }
 }

@@ -2,12 +2,16 @@ package main.java.com.sistema.modelo;
 import java.util.List;
 
 public class Pedido {
-    private List<CarrinhoItem> itens;
-    private PedidoEstado estado; // simplificar para a mesma implementação de "status" do leilao
+    private Carrinho carrinho;
+    private PedidoEstado estado; //simplificar para a mesma implementação de "status" do leilao
     private Cliente cliente;
+    private Pagamento pagamento; 
 
-    public Pedido() {
+    public Pedido(Carrinho carrinho, Cliente cliente, Pagamento pagamento) {
         estado = new PedidoNovo(); // Estado inicial
+        this.carrinho = carrinho; 
+        this.pagamento = pagamento;
+        this.cliente = cliente; 
     }
 
     public void proximoEstado() {
@@ -31,8 +35,11 @@ public class Pedido {
         return cliente;
     }
 
-    public List<CarrinhoItem> getItens(){
-        return itens;
+    public Carrinho getCarrinho(){
+        return carrinho;
     }
-    // Construtor, getters e setters
+
+    public Pagamento getPagamento(){
+        return pagamento; 
+    }
 }

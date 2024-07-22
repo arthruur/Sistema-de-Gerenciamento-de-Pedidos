@@ -50,6 +50,11 @@ public class TelaLoginAdmin {
         JButton botaoLogin = new JButton("Entrar");
         panel_login.add(botaoLogin, constraints);
 
+        // Botão de Voltar
+        JButton botaoVoltar = new JButton("Voltar");
+        constraints.gridy = 3;
+        panel_login.add(botaoVoltar, constraints);
+
         // Adicionando o painel de login ao frame
         jFrame.add(panel_login, BorderLayout.CENTER);
 
@@ -65,6 +70,15 @@ public class TelaLoginAdmin {
                 } catch (LoginFalhouException ex) {
                     JOptionPane.showMessageDialog(jFrame, "Login falhou: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+
+        // Listener do botão Voltar
+        botaoVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new TelaLogin(sf); // Volta para a tela de login inicial
+                jFrame.dispose(); // Fecha a tela de login do administrador
             }
         });
 

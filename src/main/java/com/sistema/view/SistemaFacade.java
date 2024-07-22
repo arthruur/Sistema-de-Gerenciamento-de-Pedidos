@@ -54,5 +54,9 @@ public class SistemaFacade {
       return cs.getClientes();
    }
 
+   public ControllerSistema getController(){
+      return cs; 
+   }
+
 
 }

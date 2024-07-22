@@ -1,16 +1,20 @@
 package main.java.com.sistema.modelo;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Admin {
     Estoque estoque;
     String senha; 
-    List<Pedido> pedidos; 
+    LinkedList<Pedido> pedidos; 
     
 
     public Admin(Estoque estoque){
         this.estoque = estoque; 
         this.senha = "1234"; 
+        this.pedidos = new LinkedList<>(); 
+
     }
 
     public Produto cadastrarProduto(String nome, double preco, int qtd, String desc){
@@ -39,6 +43,11 @@ public class Admin {
     public String getSenha(){
         return senha; 
     }
+    public void adicionarPedido(Pedido pedido){
+        pedidos.add(pedido); 
+    }
+    public LinkedList<Pedido> getPedidos(){
+        return pedidos; 
+    }
 
-    // Construtor, getters e setters
 }

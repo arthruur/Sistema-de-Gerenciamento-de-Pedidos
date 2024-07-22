@@ -16,7 +16,7 @@ public class TelaPrincipalAdmin {
     public TelaPrincipalAdmin(SistemaFacade sf) {
         this.sf = sf;
         JFrame frame = new JFrame("Gerenciamento de Pedidos - Administrador");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Configura a tela para fullscreen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Definindo a tela principal
@@ -33,6 +33,23 @@ public class TelaPrincipalAdmin {
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
 
+        // Criando a barra de menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuNavegacao = new JMenu("Navegação");
+        JMenuItem menuItemVoltar = new JMenuItem("Voltar para a Tela Inicial");
+
+        // Adicionando ação ao item de menu "Voltar para a Tela Inicial"
+        menuItemVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose(); // Fecha a tela atual
+                new TelaLogin(sf); 
+            }
+        });
+
+        menuNavegacao.add(menuItemVoltar);
+        menuBar.add(menuNavegacao);
+        frame.setJMenuBar(menuBar);
         // Botão Cadastrar Produto
         JButton botaoCadastrarProduto = criarBotao("Cadastrar produto no sistema", new ActionListener() {
             @Override
@@ -83,11 +100,11 @@ public class TelaPrincipalAdmin {
         gbc.gridy++;
         panelBotoes.add(botaoAcessarEstoque, gbc);
 
-        // Botão Acessar Pedidos
+    // Botão Acessar Pedidos
         JButton botaoAcessarPedidos = criarBotao("Acessar pedidos", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Acessando Pedidos...");
+                new TelaPedidoAdmin(sf.getController().getAdmin().getPedidos()); 
             }
         });
         gbc.gridx++;

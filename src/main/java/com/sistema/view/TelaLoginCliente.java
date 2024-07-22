@@ -2,7 +2,6 @@ package main.java.com.sistema.view;
 
 import main.java.com.sistema.exception.LoginFalhouException;
 import main.java.com.sistema.modelo.Cliente;
-import main.java.com.sistema.modelo.ControllerSistema;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,12 +38,17 @@ public class TelaLoginCliente extends JFrame {
         gbc.gridx = 1;
         add(textSenha, gbc);
 
-        // Botão de login
-        JButton botaoLogin = new JButton("Login");
+        // Botão de voltar
+        JButton botaoVoltar = new JButton("Voltar");
         gbc.gridx = 0;
         gbc.gridy++;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.CENTER;
+        add(botaoVoltar, gbc);
+
+        // Botão de login
+        JButton botaoLogin = new JButton("Login");
+        gbc.gridx = 1;
         add(botaoLogin, gbc);
 
         // Ação do botão de login
@@ -57,8 +61,8 @@ public class TelaLoginCliente extends JFrame {
                 try {
                     Cliente cliente = sf.getClientes().getCliente(login);
                     if (cliente != null && cliente.getSenha().equals(senha)) {
-                        JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
-                        new TelaPrincipalCliente(cliente); 
+                        new TelaPrincipalCliente(cliente, sf); 
+                        dispose(); 
                     } else {
                         throw new LoginFalhouException("Login ou senha incorretos.");
                     }
@@ -67,6 +71,16 @@ public class TelaLoginCliente extends JFrame {
                 }
             }
         });
+
+        // Ação do botão de voltar
+        botaoVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new TelaLogin(sf); // Volta para a tela inicial de login
+                dispose(); // Fecha a tela atual
+            }
+        });
+
         setLocationRelativeTo(null);
         setVisible(true);
     }
