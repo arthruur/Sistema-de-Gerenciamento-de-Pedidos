@@ -1,5 +1,6 @@
 package main.java.com.sistema.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import main.java.com.sistema.exception.ProdutoNaoCadastrou;
 import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 
-public class Admin {
+public class Admin implements Serializable{
     Estoque estoque;
     String senha; 
     LinkedList<Pedido> pedidos; 
@@ -20,8 +21,8 @@ public class Admin {
 
     }
 
-    public Produto cadastrarProduto(String nome, double preco, int qtd, String desc)throws ProdutoNaoCadastrou{
-        return estoque.cadastrarProduto(nome, preco, desc, qtd);  
+    public Produto cadastrarProduto(String nome, double preco, int qtd, String desc, String categoria)throws ProdutoNaoCadastrou{
+        return estoque.cadastrarProduto(nome, preco, desc, qtd, categoria);  
     }
 
     public boolean excluirProduto(Produto produto){

@@ -55,9 +55,20 @@ public class TelaCadastroProduto {
         gbc.gridy = 2;
         panelCadastro.add(campoDescricao, gbc);
 
-        // Botão Cadastrar
+        // Combobox Categoria
         gbc.gridx = 0;
         gbc.gridy = 3;
+        panelCadastro.add(new JLabel("Categoria:"), gbc);
+
+        String[] categorias = {"ProdutoEletronico", "ProdutoRoupa"};
+        JComboBox<String> comboCategoria = new JComboBox<>(categorias);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        panelCadastro.add(comboCategoria, gbc);
+
+        // Botão Cadastrar
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         JButton botaoCadastrar = new JButton("Cadastrar");
@@ -70,11 +81,12 @@ public class TelaCadastroProduto {
                 String nome = campoNome.getText();
                 double preco = Double.parseDouble(campoPreco.getText());
                 String descricao = campoDescricao.getText();
+                String categoria = (String) comboCategoria.getSelectedItem();
 
                 // Aqui você deve chamar o método do estoque para cadastrar o produto
                 Produto produto;
                 try {
-                    produto = estoque.cadastrarProduto(nome, preco, descricao, 0);
+                    produto = estoque.cadastrarProduto(nome, preco, descricao, 0, categoria);
                     JOptionPane.showMessageDialog(frame, "Produto cadastrado com sucesso!");
                     // Limpar campos após o cadastro (opcional)
                     campoNome.setText("");
