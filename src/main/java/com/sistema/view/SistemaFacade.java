@@ -1,5 +1,6 @@
 package main.java.com.sistema.view;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import main.java.com.sistema.exception.LoginFalhouException;
@@ -13,15 +14,16 @@ import main.java.com.sistema.modelo.Estoque;
 import main.java.com.sistema.modelo.GerenciaClientes;
 import main.java.com.sistema.modelo.Produto;
 
-public class SistemaFacade {
+public class SistemaFacade implements Serializable{
    private ControllerSistema cs; 
+   private static final long serialVersionUID = 1L;
 
    public SistemaFacade(ControllerSistema cs) {
       this.cs = cs; 
    }
 
-   public Produto cadastrarProduto(String nome, double preco, int quantidade, String descricao) throws ProdutoNaoCadastrou {
-      return cs.getAdmin().cadastrarProduto(nome, preco, quantidade, descricao);
+   public Produto cadastrarProduto(String nome, double preco, int quantidade, String descricao, String categoria) throws ProdutoNaoCadastrou {
+      return cs.getAdmin().cadastrarProduto(nome, preco, quantidade, descricao, categoria);
    }
 
    public boolean adicionarProduto(Produto produto, int quantidade) throws QuantidadeNaoAlteradaException {
@@ -60,5 +62,8 @@ public class SistemaFacade {
       return cs; 
    }
 
+   public void setController(ControllerSistema controller){
+      this.cs = controller;
+   }
 
 }

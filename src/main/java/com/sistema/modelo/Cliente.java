@@ -1,8 +1,9 @@
 package main.java.com.sistema.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cliente {
+public class Cliente implements Serializable{
 
     private String login;
     private String senha;

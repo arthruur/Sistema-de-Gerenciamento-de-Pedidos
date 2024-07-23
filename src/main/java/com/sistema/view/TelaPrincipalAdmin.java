@@ -8,6 +8,7 @@ import main.java.com.sistema.modelo.Estoque;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class TelaPrincipalAdmin {
 
@@ -37,6 +38,8 @@ public class TelaPrincipalAdmin {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuNavegacao = new JMenu("Navegação");
         JMenuItem menuItemVoltar = new JMenuItem("Voltar para a Tela Inicial");
+        JMenuItem menuItemSalvar = new JMenuItem("Salvar");
+        JMenuItem menuItemCarregar = new JMenuItem("Carregar");
 
         // Adicionando ação ao item de menu "Voltar para a Tela Inicial"
         menuItemVoltar.addActionListener(new ActionListener() {
@@ -46,8 +49,34 @@ public class TelaPrincipalAdmin {
                 new TelaLogin(sf); 
             }
         });
+        menuItemSalvar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               try {
+                ControllerSistema.salvar(sf.getController(), "sistema.bin");
+                JOptionPane.showMessageDialog(frame, "Sistema salvo com sucesso!");
+               } catch (IOException a) {
+                JOptionPane.showMessageDialog(frame, "Erro ao salvar o sistema.","Erro", JOptionPane.ERROR_MESSAGE);
+               }
+            }
+        });
+
+        menuItemCarregar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                    ControllerSistema sistema = ControllerSistema.carregar("sistema.bin");
+                    sf.setController(sistema);
+                    JOptionPane.showMessageDialog(frame, "Sistema carregado com sucesso!");
+                } catch (IOException | ClassNotFoundException a) {
+                    JOptionPane.showMessageDialog(frame,"Erro ao carregar o sistema", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
         menuNavegacao.add(menuItemVoltar);
+        menuNavegacao.add(menuItemSalvar);
+        menuNavegacao.add(menuItemCarregar);
         menuBar.add(menuNavegacao);
         frame.setJMenuBar(menuBar);
         // Botão Cadastrar Produto

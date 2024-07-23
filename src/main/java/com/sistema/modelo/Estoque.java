@@ -1,5 +1,6 @@
 package main.java.com.sistema.modelo;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 import main.java.com.sistema.exception.ProdutoNaoCadastrou;
 import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 
-public class Estoque {
+public class Estoque implements Serializable{
     private static Estoque instance;
     private Map<Produto, Integer> produtos;
 
@@ -24,20 +25,26 @@ public class Estoque {
     }
     
     // provavelmente será modificado para usar factory method
-    public synchronized Produto cadastrarProduto(String nome, double preco, String desc, int qtd)throws ProdutoNaoCadastrou{
-
-        if (nome == null || nome.isEmpty()){
+    public synchronized Produto cadastrarProduto(String nome, double preco, String desc, int qtd, String categoria) throws ProdutoNaoCadastrou {
+        if (nome == null || nome.isEmpty()) {
             throw new ProdutoNaoCadastrou("É necessário preencher o campo nome");
         }
-        
-        if (preco <= 0){
+    
+        if (preco <= 0) {
             throw new ProdutoNaoCadastrou("É necessário preencher o campo preco");
         }
-
-        Produto produto = new ProdutoEletronico(nome, preco, desc);
+    
+        Produto produto;
+        if ("ProdutoEletronico".equals(categoria)) {
+            produto = new ProdutoEletronico(nome, preco, desc);
+        } else if ("ProdutoRoupa".equals(categoria)) {
+            produto = new ProdutoRoupa(nome, preco, desc);
+        } else {
+            throw new ProdutoNaoCadastrou("Categoria inválida");
+        }
+        
         produtos.put(produto, qtd);
         return produto;
-
     }
 
     public synchronized boolean adicionarQuantidade(Produto produto, int qtd)throws QuantidadeNaoAlteradaException{

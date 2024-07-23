@@ -1,11 +1,12 @@
 package main.java.com.sistema.modelo;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import main.java.com.sistema.exception.UsuarioNaoCadastrouException;
 
-public class GerenciaClientes {
+public class GerenciaClientes implements Serializable{
     private Map<String, Cliente> clientes;
 
     public GerenciaClientes(){
