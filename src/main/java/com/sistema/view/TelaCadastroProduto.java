@@ -12,9 +12,11 @@ import main.java.com.sistema.modelo.Produto;
 public class TelaCadastroProduto {
 
     private Estoque estoque;
+    private SistemaFacade sf; 
 
-    public TelaCadastroProduto(Estoque estoque) {
+    public TelaCadastroProduto(Estoque estoque, SistemaFacade sf) {
         this.estoque = estoque;
+        this.sf = sf; 
         JFrame frame = new JFrame("Cadastro de Produto");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -54,6 +56,7 @@ public class TelaCadastroProduto {
         gbc.gridx = 1;
         gbc.gridy = 2;
         panelCadastro.add(campoDescricao, gbc);
+        
 
         // Combobox Categoria
         gbc.gridx = 0;
@@ -83,10 +86,9 @@ public class TelaCadastroProduto {
                 String descricao = campoDescricao.getText();
                 String categoria = (String) comboCategoria.getSelectedItem();
 
-                // Aqui você deve chamar o método do estoque para cadastrar o produto
                 Produto produto;
                 try {
-                    produto = estoque.cadastrarProduto(nome, preco, descricao, 0, categoria);
+                    produto = sf.getAdmin().cadastrarProduto(nome, preco, 0, descricao, categoria);
                     JOptionPane.showMessageDialog(frame, "Produto cadastrado com sucesso!");
                     // Limpar campos após o cadastro (opcional)
                     campoNome.setText("");

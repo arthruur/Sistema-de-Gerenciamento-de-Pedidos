@@ -30,5 +30,4 @@ public class GerenciaClientes implements Serializable{
     public Cliente getCliente(String login){
         return clientes.get(login);
     }
-    // Construtor, getters e setters
 }

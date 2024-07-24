@@ -1,6 +1,8 @@
 package main.java.com.sistema.modelo;
 
-public class Pagamento {
+import java.io.Serializable;
+
+public class Pagamento implements Serializable {
     private String metodoPagamento;
     private double valor; 
 

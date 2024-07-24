@@ -24,7 +24,6 @@ public class Estoque implements Serializable{
 
     }
     
-    // provavelmente será modificado para usar factory method
     public synchronized Produto cadastrarProduto(String nome, double preco, String desc, int qtd, String categoria) throws ProdutoNaoCadastrou {
         if (nome == null || nome.isEmpty()) {
             throw new ProdutoNaoCadastrou("É necessário preencher o campo nome");
@@ -35,9 +34,9 @@ public class Estoque implements Serializable{
         }
     
         Produto produto;
-        if ("ProdutoEletronico".equals(categoria)) {
+        if (categoria == "Eletrônico" || categoria == "ProdutoEletronico") {
             produto = new ProdutoEletronico(nome, preco, desc);
-        } else if ("ProdutoRoupa".equals(categoria)) {
+        } else if (categoria == "Roupa" || categoria =="ProdutoRoupa") {
             produto = new ProdutoRoupa(nome, preco, desc);
         } else {
             throw new ProdutoNaoCadastrou("Categoria inválida");

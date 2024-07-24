@@ -1,9 +1,10 @@
 package main.java.com.sistema.modelo;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Carrinho {
+public class Carrinho implements Serializable {
     private Map<Produto, Integer> itens;
 
     public Carrinho() {

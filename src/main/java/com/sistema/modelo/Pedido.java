@@ -1,9 +1,10 @@
 package main.java.com.sistema.modelo;
+import java.io.Serializable;
 import java.util.List;
 
-public class Pedido {
+public class Pedido implements Serializable {
     private Carrinho carrinho;
-    private PedidoEstado estado; //simplificar para a mesma implementação de "status" do leilao
+    private PedidoEstado estado; 
     private Cliente cliente;
     private Pagamento pagamento; 
 

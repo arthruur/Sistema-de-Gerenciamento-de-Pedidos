@@ -8,6 +8,7 @@ import main.java.com.sistema.modelo.Estoque;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 public class TelaPrincipalAdmin {
@@ -52,29 +53,41 @@ public class TelaPrincipalAdmin {
         menuItemSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               try {
-                ControllerSistema.salvar(sf.getController(), "sistema.bin");
-                JOptionPane.showMessageDialog(frame, "Sistema salvo com sucesso!");
-               } catch (IOException a) {
-                JOptionPane.showMessageDialog(frame, "Erro ao salvar o sistema.","Erro", JOptionPane.ERROR_MESSAGE);
-               }
-            }
-        });
-
-        menuItemCarregar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                try {
-                    ControllerSistema sistema = ControllerSistema.carregar("sistema.bin");
-                    sf.setController(sistema);
-                    JOptionPane.showMessageDialog(frame, "Sistema carregado com sucesso!");
-                } catch (IOException | ClassNotFoundException a) {
-                    JOptionPane.showMessageDialog(frame,"Erro ao carregar o sistema", "Erro", JOptionPane.ERROR_MESSAGE);
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showSaveDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        String caminhoSalvo = sf.getController().salvarDados(selectedFile.getAbsolutePath());
+                        JOptionPane.showMessageDialog(frame, "Dados salvos com sucesso no caminho: " + caminhoSalvo);
+                    } catch (IOException ex) {
+                    }
                 }
             }
         });
-
-        menuNavegacao.add(menuItemVoltar);
+                        
+        menuItemCarregar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        // Cria uma instância de ControllerSistema para carregar os dados
+                        ControllerSistema sistema = new ControllerSistema();
+                        String caminhoCarregado = sistema.carregarDados(selectedFile.getAbsolutePath());
+                        
+                        // Atualiza o controller do sistema na tela principal
+                        sf.setController(sistema);
+                        JOptionPane.showMessageDialog(frame, "Sistema carregado com sucesso do caminho: " + caminhoCarregado);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        JOptionPane.showMessageDialog(frame, "Erro ao carregar o sistema: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+                        menuNavegacao.add(menuItemVoltar);
         menuNavegacao.add(menuItemSalvar);
         menuNavegacao.add(menuItemCarregar);
         menuBar.add(menuNavegacao);
@@ -83,7 +96,7 @@ public class TelaPrincipalAdmin {
         JButton botaoCadastrarProduto = criarBotao("Cadastrar produto no sistema", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new TelaCadastroProduto(Estoque.getInstance()); 
+                new TelaCadastroProduto(Estoque.getInstance(), sf); 
             }
         });
         panelBotoes.add(botaoCadastrarProduto, gbc);
@@ -92,7 +105,7 @@ public class TelaPrincipalAdmin {
         JButton botaoRemoverProduto = criarBotao("Remover produto do sistema", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new TelaRemoverProdutoEstoque(Estoque.getInstance()); 
+                new TelaRemoverProdutoEstoque(Estoque.getInstance(), sf); 
             }
         });
         gbc.gridx++;
@@ -112,7 +125,7 @@ public class TelaPrincipalAdmin {
         JButton botaoDiminuirProduto = criarBotao("Diminuir quantidade de um produto", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                new TelaDiminuirEstoque(Estoque.getInstance()); 
+                new TelaDiminuirEstoque(Estoque.getInstance(), sf); 
             }
         });
         gbc.gridx++; 

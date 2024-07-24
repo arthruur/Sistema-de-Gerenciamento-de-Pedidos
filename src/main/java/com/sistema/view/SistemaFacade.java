@@ -65,5 +65,8 @@ public class SistemaFacade implements Serializable{
    public void setController(ControllerSistema controller){
       this.cs = controller;
    }
+   public Admin getAdmin(){
+      return cs.getAdmin(); 
+   }
 
 }

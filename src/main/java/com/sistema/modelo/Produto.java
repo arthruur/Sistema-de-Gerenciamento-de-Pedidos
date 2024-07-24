@@ -1,6 +1,9 @@
 package main.java.com.sistema.modelo;
 
-public abstract class Produto {
+import java.io.Serializable;
+import java.util.Objects;
+
+public abstract class Produto implements Serializable {
     private String nome;
     private double preco;
     private String descricao;
@@ -27,6 +30,20 @@ public abstract class Produto {
     public String toString(){
         return nome; 
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produto produto = (Produto) o;
+        return nome.equals(produto.nome);
+    }
+
+
 
     public abstract String getCategoria();
 

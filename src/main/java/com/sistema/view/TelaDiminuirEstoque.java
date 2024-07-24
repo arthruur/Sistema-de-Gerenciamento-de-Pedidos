@@ -15,9 +15,11 @@ public class TelaDiminuirEstoque extends JFrame {
     private Estoque estoque;
     private JComboBox<Produto> comboProdutos;
     private JTextField campoQuantidade;
+    private SistemaFacade sf; 
 
-    public TelaDiminuirEstoque(Estoque estoque) {
+    public TelaDiminuirEstoque(Estoque estoque, SistemaFacade sf) {
         this.estoque = estoque;
+        this.sf = sf; 
 
         setTitle("Diminuir Quantidade de Produto");
         setSize(400, 200);
@@ -120,11 +122,5 @@ public class TelaDiminuirEstoque extends JFrame {
         }
     }
 
-    // Método principal para testar a tela
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Estoque estoque = Estoque.getInstance(); // Obtém a instância do estoque
-            new TelaDiminuirEstoque(estoque);
-        });
     }
-}
+

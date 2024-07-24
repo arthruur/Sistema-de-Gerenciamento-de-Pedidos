@@ -12,8 +12,9 @@ import main.java.com.sistema.modelo.Produto;
 public class TelaRemoverProdutoEstoque {
 
     private Estoque estoque;
+    private SistemaFacade sf; 
 
-    public TelaRemoverProdutoEstoque(Estoque estoque) {
+    public TelaRemoverProdutoEstoque(Estoque estoque, SistemaFacade sf) {
         this.estoque = estoque;
         JFrame frame = new JFrame("Remover Produto do Estoque");
         frame.setSize(400, 300);
@@ -76,7 +77,7 @@ public class TelaRemoverProdutoEstoque {
                     String nomeProduto = checkBox.getText().split(" ")[0]; // Pega o nome do produto antes do espaço
                     Produto produto = estoque.getProduto(nomeProduto);
                     if (produto != null) {
-                        estoque.removerProduto(produto);
+                        sf.getAdmin().excluirProduto(produto);
                     }
                 }
             }
