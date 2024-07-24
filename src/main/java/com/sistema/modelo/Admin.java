@@ -11,13 +11,15 @@ import main.java.com.sistema.exception.QuantidadeNaoAlteradaException;
 public class Admin implements Serializable{
     Estoque estoque;
     String senha; 
-    LinkedList<Pedido> pedidos; 
+    LinkedList<Pedido> pedidos;
+    GerenciaClientes clientes; 
     
 
     public Admin(Estoque estoque){
         this.estoque = estoque; 
         this.senha = "1234"; 
         this.pedidos = new LinkedList<>(); 
+        this.clientes = new GerenciaClientes(); 
 
     }
 
